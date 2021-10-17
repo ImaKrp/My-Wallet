@@ -1,5 +1,3 @@
-import React from "react";
-
 export const sun = (
   <svg viewBox="0 0 128 128" height="100%" width="100%">
     <path

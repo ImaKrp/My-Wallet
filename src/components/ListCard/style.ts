@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 type Colors = {
-  cardColor?: string;
   tagColor?: string;
 };
 
@@ -10,9 +9,8 @@ export const Container = styled.li<Colors>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ cardColor }) =>
-    cardColor ? `var(--${cardColor})` : "var(--card)"};
-  border-left: 6px solid
+  background-color: var(--card);
+  border-left: 4px solid
     ${({ tagColor }) => (tagColor ? `var(--${tagColor})` : "var(--card)")};
   transition: background-color 0.3s, border 0.3s, transform 0.2s, opacity 0.3s;
   border-radius: 6px;

@@ -3,7 +3,6 @@ import { Container, Column, Title, Subtitle, Amount } from "./style";
 
 interface IListCard {
   tagColor: string;
-  cardColor: string;
   title: string;
   subtitle: string;
   amount: string;
@@ -11,13 +10,12 @@ interface IListCard {
 
 export const ListCard: React.FC<IListCard> = ({
   tagColor,
-  cardColor,
   title,
   subtitle,
   amount,
 }) => {
   return (
-    <Container cardColor={cardColor} tagColor={tagColor}>
+    <Container tagColor={tagColor}>
       <Column>
         <Title>{title}</Title>
         <Subtitle>{subtitle}</Subtitle>

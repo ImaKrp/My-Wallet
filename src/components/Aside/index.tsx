@@ -22,19 +22,19 @@ export const Aside: React.FC = () => {
         <Title>My Wallet</Title>
       </Header>
       <MenuContainer>
-        <MenuItem>
+        <MenuItem to="/dashboard">
           <MdSpaceDashboard />
           Dashboard
         </MenuItem>
-        <MenuItem>
+        <MenuItem to="/list/entry-balance">
           <MdArrowUpward />
-          Funds entering
+          Entry Balance
         </MenuItem>
-        <MenuItem>
+        <MenuItem to="/list/exit-balance">
           <MdArrowDownward />
-          Funds leaving
+          Exit Balance
         </MenuItem>
-        <MenuItem>
+        <MenuItem to="/dashboard">
           <MdExitToApp />
           Sign out
         </MenuItem>

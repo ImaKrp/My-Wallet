@@ -8,13 +8,16 @@ interface ISelectProps {
   }[];
 }
 
-export const Select: React.FC<ISelectProps> = ({options}) => {
+export const Select: React.FC<ISelectProps> = ({ options }) => {
   return (
     <Container>
       <SelectElement>
-        {options && options.map(item => (
-          <option value={item.value}>{item.label}</option>
-        ))}
+        {options &&
+          options.map((item, key) => (
+            <option key={key} value={item.value}>
+              {item.label}
+            </option>
+          ))}
       </SelectElement>
     </Container>
   );

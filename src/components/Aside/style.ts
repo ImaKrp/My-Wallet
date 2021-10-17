@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   grid-area: AS;
@@ -24,7 +25,6 @@ export const Logo = styled.img`
 
 export const MenuContainer = styled.nav`
   padding: 3rem 0 0 2rem;
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -32,14 +32,16 @@ export const MenuContainer = styled.nav`
   color: var(--success);
 `;
 
-export const MenuItem = styled.a`
+export const MenuItem = styled(Link)`
   font-size: 1.6rem;
   display: flex;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.3s;
   width: fit-content;
   align-items: center;
   justify-content: flex-start;
   gap: 0.8rem;
+  color: var(--success);
+
   &:hover {
     opacity: 0.7;
   }
