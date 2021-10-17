@@ -4,6 +4,7 @@ import { ContentHeader } from "../../../components/ContentHeader";
 import { Select } from "../../../components/Select";
 import { ListCard } from "../../../components/ListCard";
 import monthsList from "../../../utils/months";
+import formatAmountValue from "../../../utils/formatAmountValue";
 
 import gains from "../../../data/gains";
 import expenses from "../../../data/expenses";
@@ -32,10 +33,8 @@ export const List: React.FC<IRoutesParams> = ({ match }) => {
     "recurrent",
     "eventual",
   ]);
-  const [selectedMonth, setSelectedMonth] = useState<string>(
-    String(starterMonth)
-  );
-  const [selectedYear, setSelectedYear] = useState<string>(String(starterYear));
+  const [selectedMonth, setSelectedMonth] = useState<number>(starterMonth);
+  const [selectedYear, setSelectedYear] = useState<number>(starterYear);
 
   const { type } = match.params;
 
@@ -79,13 +78,13 @@ export const List: React.FC<IRoutesParams> = ({ match }) => {
   }, [type]);
 
   useEffect(() => {
-    const starterYear = String(new Date().getFullYear());
+    const starterYear = new Date().getFullYear();
     if (!years) return;
     const orderedYears = years.sort(function (el, nextEl) {
       return el.value - nextEl.value;
     });
     if (!orderedYears[0]) return;
-    const maximumYear = String(orderedYears[orderedYears.length - 1].value);
+    const maximumYear = orderedYears[orderedYears.length - 1].value;
     if (maximumYear !== starterYear) setSelectedYear(maximumYear);
   }, [years]);
 
@@ -107,13 +106,15 @@ export const List: React.FC<IRoutesParams> = ({ match }) => {
     <Container>
       <ContentHeader title={pageType.title} color={pageType.color}>
         <Select
+          type="months"
           options={months}
-          onChange={(e) => setSelectedMonth(e.target.value)}
+          onChange={(e) => setSelectedMonth(Number(e.target.value))}
           value={selectedMonth}
         />
         <Select
+          type="years"
           options={years}
-          onChange={(e) => setSelectedYear(e.target.value)}
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
           value={selectedYear}
         />
       </ContentHeader>
@@ -138,8 +139,8 @@ export const List: React.FC<IRoutesParams> = ({ match }) => {
           data
             .filter((item) => {
               const date = new Date(item.date);
-              const month = String(date.getMonth() + 1);
-              const year = String(date.getFullYear());
+              const month = date.getMonth() + 1;
+              const year = date.getFullYear();
 
               return (
                 month === selectedMonth &&
@@ -154,7 +155,7 @@ export const List: React.FC<IRoutesParams> = ({ match }) => {
                   title={item.description}
                   subtitle={item.date}
                   tagColor={item.frequency === "eventual" ? "warning" : "info"}
-                  amount={item.amount}
+                  amount={formatAmountValue(Number(item.amount))}
                 />
               );
             })}

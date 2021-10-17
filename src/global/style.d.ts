@@ -9,6 +9,10 @@ declare module "styled-components" {
       info: string;
       warning: string;
 
+      card_success: string;
+      card_info: string;
+      card_warning: string;
+
       primary: string;
       secondary: string;
       terciary: string;
@@ -26,6 +30,7 @@ declare module "styled-components" {
 
     image: {
       select: string;
+      wallet: string;
     };
   }
 }

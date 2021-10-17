@@ -31,7 +31,7 @@ export const Button = styled.button<buttonColor>`
   font-size: 1.8rem;
   font-weight: 400;
   border-radius: 5px;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.3s;
   position: relative;
   opacity: ${({ active }) => active ? '1' : '0.6'};
 

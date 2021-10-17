@@ -19,6 +19,10 @@ html {
   --info: ${props => props.theme.color.info};
   --warning: ${props => props.theme.color.warning};
 
+  --card-success: ${props => props.theme.color.card_success};
+  --card-info: ${props => props.theme.color.card_info};
+  --card-warning: ${props => props.theme.color.card_warning};
+
   --primary: ${props => props.theme.color.primary};
   --secondary: ${props => props.theme.color.secondary};
   --terciary: ${props => props.theme.color.terciary};
@@ -28,6 +32,10 @@ html {
   --focus: ${props => props.theme.color.focus};
 
   --card: ${props => props.theme.color.card};
+
+  --white: ${props => props.theme.color.white};
+  --black: ${props => props.theme.color.black};
+  --gray: ${props => props.theme.color.gray};
 
   font-size: 62.5%;
 

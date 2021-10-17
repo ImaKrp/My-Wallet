@@ -6,6 +6,10 @@ const light = {
     info: "#03DAC6",
     warning: "#B00020",
 
+    card_success: "#6200EE",
+    card_info: "#018276",
+    card_warning: "#B00020",
+
     primary: "#ebeff2",
     secondary: "#FAFAFA",
     terciary: "#e6e8eb",
@@ -18,11 +22,12 @@ const light = {
 
     focus: "#6200EE66",
 
-    card: '#FFF',
+    card: "#FFF",
   },
 
   image: {
     select: "/icons/light-arrow.svg",
+    wallet: "/icons/lightWallet.svg",
   },
 };
 export default light;

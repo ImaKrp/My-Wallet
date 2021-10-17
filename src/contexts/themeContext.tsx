@@ -16,6 +16,10 @@ export interface ITheme {
     info: string;
     warning: string;
 
+    card_success: string;
+    card_info: string;
+    card_warning: string;
+
     primary: string;
     secondary: string;
     terciary: string;
@@ -33,6 +37,7 @@ export interface ITheme {
 
   image: {
     select: string;
+    wallet: string;
   };
 }
 

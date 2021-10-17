@@ -18,7 +18,7 @@ export const Aside: React.FC = () => {
   return (
     <Container>
       <Header>
-        <Logo src="/icons/wallet.svg" alt="logo" />
+        <Logo/>
         <Title>My Wallet</Title>
       </Header>
       <MenuContainer>

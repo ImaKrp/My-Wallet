@@ -18,9 +18,13 @@ export const Header = styled.header`
   gap: 1.6rem;
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.div`
   height: 5.75rem;
   width: 5.75rem;
+  background-position: center;
+  background-image: url(${props => props.theme.image.wallet});
+  background-repeat: no-repeat;
+  background-size: 100%;
 `;
 
 export const MenuContainer = styled.nav`
