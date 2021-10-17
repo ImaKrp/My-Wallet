@@ -1,9 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Container, Content, Filters, Button } from "./style";
 import { ContentHeader } from "../../../components/ContentHeader";
 import { Select } from "../../../components/Select";
 import { ListCard } from "../../../components/ListCard";
-import { months, years } from "../../../utils/genOptions";
+import monthsList from "../../../utils/months";
+
+import gains from "../../../data/gains";
+import expenses from "../../../data/expenses";
 interface IRoutesParams {
   match: {
     params: {
@@ -12,62 +15,149 @@ interface IRoutesParams {
   };
 }
 
+interface IData {
+  description: string;
+  amount: string;
+  type: string;
+  frequency: string;
+  date: string;
+}
+
 export const List: React.FC<IRoutesParams> = ({ match }) => {
+  const starterMonth = new Date().getMonth() + 1;
+  const starterYear = new Date().getFullYear();
+
+  const [data, setData] = useState<IData[]>([]);
+  const [frequencyFilter, setFrequencyFilter] = useState<string[]>([
+    "recurrent",
+    "eventual",
+  ]);
+  const [selectedMonth, setSelectedMonth] = useState<string>(
+    String(starterMonth)
+  );
+  const [selectedYear, setSelectedYear] = useState<string>(String(starterYear));
+
   const { type } = match.params;
 
+  const years = useMemo(() => {
+    let uniqueYears: number[] = [];
+
+    data.forEach((item) => {
+      const date = new Date(item.date);
+      const year = date.getFullYear();
+
+      if (!uniqueYears.includes(year)) {
+        uniqueYears.push(year);
+      }
+    });
+
+    return uniqueYears.map((year) => {
+      return {
+        value: year,
+        label: year,
+      };
+    });
+  }, [data]);
+
+  const months = useMemo(() => {
+    return monthsList.map((month, index) => {
+      return {
+        value: index + 1,
+        label: month,
+      };
+    });
+  }, []);
+
   const pageType = useMemo(() => {
-    return type === "entry-balance"
-      ? { title: "Entry", color: "info" }
-      : { title: "Exit", color: "warning" };
+    return type === "gains"
+      ? { title: "Gains", color: "info" }
+      : { title: "Expenses", color: "warning" };
   }, [type]);
+
+  useEffect(() => {
+    setData(type === "gains" ? gains : expenses);
+  }, [type]);
+
+  useEffect(() => {
+    const starterYear = String(new Date().getFullYear());
+    if (!years) return;
+    const orderedYears = years.sort(function (el, nextEl) {
+      return el.value - nextEl.value;
+    });
+    if (!orderedYears[0]) return;
+    const maximumYear = String(orderedYears[orderedYears.length - 1].value);
+    if (maximumYear !== starterYear) setSelectedYear(maximumYear);
+  }, [years]);
+
+  const handleFrequencyFilter = (frequency: string) => {
+    const alreadySelected = frequencyFilter.findIndex(
+      (item) => item === frequency
+    );
+    if (alreadySelected >= 0) {
+      const filtered = frequencyFilter.filter((value) => {
+        return value !== frequency;
+      });
+      setFrequencyFilter([...filtered]);
+    } else {
+      setFrequencyFilter([...frequencyFilter, frequency]);
+    }
+  };
 
   return (
     <Container>
       <ContentHeader title={pageType.title} color={pageType.color}>
-        <Select options={months} />
-        <Select options={years} />
+        <Select
+          options={months}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          value={selectedMonth}
+        />
+        <Select
+          options={years}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          value={selectedYear}
+        />
       </ContentHeader>
       <Filters>
-        <Button color="info">Recurrent</Button>
-        <Button color="warning">Eventual</Button>
+        <Button
+          color="info"
+          onClick={() => handleFrequencyFilter("recurrent")}
+          active={frequencyFilter.includes("recurrent") ? true : false}
+        >
+          Recurrent
+        </Button>
+        <Button
+          color="warning"
+          onClick={() => handleFrequencyFilter("eventual")}
+          active={frequencyFilter.includes("eventual") ? true : false}
+        >
+          Eventual
+        </Button>
       </Filters>
       <Content>
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="warning"
-          amount="$ 123.00"
-        />
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="info"
-          amount="$ 123.00"
-        />
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="warning"
-          amount="$ 123.00"
-        />
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="info"
-          amount="$ 123.00"
-        />
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="warning"
-          amount="$ 123.00"
-        />
-        <ListCard
-          title="Conta de Luz"
-          subtitle="0000-00-00"
-          tagColor="info"
-          amount="$ 123.00"
-        />
+        {data &&
+          data
+            .filter((item) => {
+              const date = new Date(item.date);
+              const month = String(date.getMonth() + 1);
+              const year = String(date.getFullYear());
+
+              return (
+                month === selectedMonth &&
+                year === selectedYear &&
+                frequencyFilter.includes(item.frequency)
+              );
+            })
+            .map((item, index) => {
+              return (
+                <ListCard
+                  key={index}
+                  title={item.description}
+                  subtitle={item.date}
+                  tagColor={item.frequency === "eventual" ? "warning" : "info"}
+                  amount={item.amount}
+                />
+              );
+            })}
       </Content>
     </Container>
   );

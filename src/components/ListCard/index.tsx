@@ -20,7 +20,7 @@ export const ListCard: React.FC<IListCard> = ({
         <Title>{title}</Title>
         <Subtitle>{subtitle}</Subtitle>
       </Column>
-      <Amount>{amount}</Amount>
+      <Amount>$ {amount}</Amount>
     </Container>
   );
 };

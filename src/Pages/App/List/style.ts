@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 type buttonColor = {
   color?: string;
+  active?: boolean;
 };
 
 export const Container = styled.div`
@@ -17,11 +18,11 @@ export const Content = styled.div`
 
 export const Filters = styled.div`
   display: flex;
-  gap: 1.8rem;
+  gap: 2.4rem;
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 1rem 0 3rem 0;
+  padding: 0.5rem 0 3rem 0;
 `;
 
 export const Button = styled.button<buttonColor>`
@@ -32,6 +33,7 @@ export const Button = styled.button<buttonColor>`
   border-radius: 5px;
   transition: opacity 0.3s;
   position: relative;
+  opacity: ${({ active }) => active ? '1' : '0.6'};
 
   &::after {
     content: "";
@@ -44,9 +46,9 @@ export const Button = styled.button<buttonColor>`
     transition: background-color 0.3s, opacity 0.3s;
   }
   &:hover::after {
-    opacity: 0.7;
+    opacity: ${({ active }) => active ? '0.7' : '0.4'};
   }
   &:hover {
-    opacity: 0.7;
+    opacity: ${({ active }) => active ? '0.7' : '0.4'};
   }
 `;

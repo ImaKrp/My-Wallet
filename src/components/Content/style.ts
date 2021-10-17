@@ -14,7 +14,7 @@ export const Container = styled.div`
   }
 
   ::-webkit-scrollbar-track {
-    background-color: var(--primary);
+    background-color: inherit;
   }
 
   ::-webkit-scrollbar-thumb {

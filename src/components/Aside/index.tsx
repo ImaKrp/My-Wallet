@@ -26,13 +26,13 @@ export const Aside: React.FC = () => {
           <MdSpaceDashboard />
           Dashboard
         </MenuItem>
-        <MenuItem to="/list/entry-balance">
+        <MenuItem to="/list/gains">
           <MdArrowUpward />
-          Entry Balance
+          Gains
         </MenuItem>
-        <MenuItem to="/list/exit-balance">
+        <MenuItem to="/list/expenses">
           <MdArrowDownward />
-          Exit Balance
+          Expenses
         </MenuItem>
         <MenuItem to="/dashboard">
           <MdExitToApp />

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, ToggleLabel, StyledSwitch } from "./style";
 import { sun, moon } from "./icons";
 
-export const Toggle: React.FC = () => {
-  const [checked, setCheck] = useState(false);
+interface IToggleProps {
+  checked: boolean;
+  onChange(): void;
+}
 
+export const Toggle: React.FC<IToggleProps> = ({checked, onChange}) => {
   return (
     <Container>
       <ToggleLabel></ToggleLabel>
       <StyledSwitch
-        onChange={() => setCheck(!checked)}
+        onChange={onChange}
         checked={checked}
         uncheckedIcon={moon}
         checkedIcon={sun}
