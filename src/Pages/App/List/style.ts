@@ -22,7 +22,7 @@ export const Filters = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0.5rem 0 3rem 0;
+  padding: 1.5rem 0 2rem 0;
 `;
 
 export const Button = styled.button<buttonColor>`
