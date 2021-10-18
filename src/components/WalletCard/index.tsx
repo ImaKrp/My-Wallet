@@ -24,7 +24,7 @@ export const WalletCard: React.FC<ISelectProps> = ({
           start={0}
           end={amount}
           separator=","
-          duration={1.5}
+          duration={1}
           prefix="$ "
           decimals={2}
         />

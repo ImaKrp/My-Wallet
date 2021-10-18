@@ -4,6 +4,7 @@ import { ContentHeader } from "../../../components/ContentHeader";
 import { Select } from "../../../components/Select";
 import { WalletCard } from "../../../components/WalletCard";
 import { MessageCard } from "../../../components/MessageCard";
+import { PieChartCard } from "../../../components/PieChartCard";
 import monthsList from "../../../utils/months";
 
 import gains from "../../../data/gains";
@@ -44,6 +45,22 @@ export const Dashboard: React.FC = () => {
     });
   }, []);
 
+  const monthGains = useMemo(() => {
+    let total: number = 0;
+    gains
+      .filter((item) => {
+        const date = new Date(item.date);
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return month === selectedMonth && year === selectedYear;
+      })
+      .forEach((item) => {
+        total += Number(item.amount);
+      });
+    return total;
+  }, [selectedMonth, selectedYear]);
+
   const gainLastChange = useMemo(() => {
     const filteredGains = gains.filter((item) => {
       const date = new Date(item.date);
@@ -54,6 +71,22 @@ export const Dashboard: React.FC = () => {
     });
     if (!filteredGains[0]) return;
     return filteredGains[filteredGains.length - 1].date;
+  }, [selectedMonth, selectedYear]);
+
+  const monthExpenses = useMemo(() => {
+    let total: number = 0;
+    expenses
+      .filter((item) => {
+        const date = new Date(item.date);
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return month === selectedMonth && year === selectedYear;
+      })
+      .forEach((item) => {
+        total += Number(item.amount);
+      });
+    return total;
   }, [selectedMonth, selectedYear]);
 
   const expensesLastChange = useMemo(() => {
@@ -68,6 +101,10 @@ export const Dashboard: React.FC = () => {
     return filteredExpenses[filteredExpenses.length - 1].date;
   }, [selectedMonth, selectedYear]);
 
+  const monthBalance = useMemo(() => {
+    return monthGains - monthExpenses;
+  }, [monthGains, monthExpenses]);
+
   useEffect(() => {
     const starterYear = new Date().getFullYear();
     if (!years) return;
@@ -78,6 +115,48 @@ export const Dashboard: React.FC = () => {
     const maximumYear = orderedYears[orderedYears.length - 1].value;
     if (maximumYear !== starterYear) setSelectedYear(maximumYear);
   }, [years]);
+
+  const message = useMemo(() => {
+    if (monthBalance > 0) {
+      return {
+        firstTitle: "Well done!",
+        secondTitle: "You did great this month!",
+        subtitle: "You should keep this way n' may even invest it.",
+      };
+    } else if (monthBalance === 0) {
+      return {
+        firstTitle: "Not bad!",
+        secondTitle: "But could be better.",
+        subtitle: "You should try to decrease the expenses next time.",
+      };
+    } else {
+      return {
+        firstTitle: "Be careful!",
+        secondTitle: "You spent more than you should.",
+        subtitle: "You neet to decrease the expenses next time.",
+      };
+    }
+  }, [monthBalance]);
+
+  const relationExpensesGains = useMemo(() => {
+    const percentGains = (monthBalance / monthGains) * 100;
+    const percentExpenses = (monthExpenses / monthGains) * 100;
+    const data = [
+      {
+        name: "Balance",
+        value: monthGains,
+        percent: percentGains ? Number(percentGains.toFixed(1)) : 0,
+        color: "success",
+      },
+      {
+        name: "Expenses",
+        value: monthExpenses,
+        percent: percentExpenses ? Number(percentExpenses.toFixed(1)) : 0,
+        color: "warning",
+      },
+    ];
+    return data;
+  }, [monthExpenses, monthGains, monthBalance]);
 
   return (
     <Container>
@@ -100,7 +179,7 @@ export const Dashboard: React.FC = () => {
           color="success"
           title="Balance"
           subtitle="Update based on gains and expenses."
-          amount={150}
+          amount={monthBalance}
           icon="dollar"
         />
         <WalletCard
@@ -111,7 +190,7 @@ export const Dashboard: React.FC = () => {
               ? `Last change on ${gainLastChange}.`
               : "None information this month"
           }
-          amount={5000.12}
+          amount={monthGains}
           icon="arrowUp"
         />
         <WalletCard
@@ -122,19 +201,15 @@ export const Dashboard: React.FC = () => {
               ? `Last change on ${expensesLastChange}.`
               : "None information this month"
           }
-          amount={4850.0}
+          amount={monthExpenses}
           icon="arrowDown"
         />
         <MessageCard
-          firstTitle="Well done!"
-          secondTitle=" You did great this month!"
-          subtitle="You should keep this way n' may even invest it."
+          firstTitle={message.firstTitle}
+          secondTitle={message.secondTitle}
+          subtitle={message.subtitle}
         />
-        <MessageCard
-          firstTitle="Well done!"
-          secondTitle=" You did great this month!"
-          subtitle="You should keep this way n' may even invest it."
-        />
+        <PieChartCard data={relationExpensesGains} />
       </Content>
     </Container>
   );
