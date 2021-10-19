@@ -58,7 +58,9 @@ export const LegendColor = styled.div<legendColor>`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: 400;
   transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
@@ -68,7 +70,7 @@ export const LegendColor = styled.div<legendColor>`
 
 export const Percent = styled(CountUp)`
   color: var(--white);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 400;
 `;
 

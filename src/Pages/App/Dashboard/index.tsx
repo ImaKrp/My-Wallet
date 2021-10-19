@@ -5,6 +5,7 @@ import { Select } from "../../../components/Select";
 import { WalletCard } from "../../../components/WalletCard";
 import { MessageCard } from "../../../components/MessageCard";
 import { PieChartCard } from "../../../components/PieChartCard";
+import { HistoryBox } from "../../../components/HistoryBox";
 import monthsList from "../../../utils/months";
 
 import gains from "../../../data/gains";
@@ -158,6 +159,46 @@ export const Dashboard: React.FC = () => {
     return data;
   }, [monthExpenses, monthGains, monthBalance]);
 
+  const historyData = useMemo(() => {
+    return monthsList
+      .map((_, month) => {
+        let amountEntry: number = 0;
+        gains.forEach((gain) => {
+          const date = new Date(gain.date);
+          const gainMonth = date.getMonth();
+          const gainYear = date.getFullYear();
+
+          if (gainMonth === month && gainYear === selectedYear)
+            amountEntry += Number(gain.amount);
+        });
+
+        let amountOutput: number = 0;
+        expenses.forEach((expense) => {
+          const date = new Date(expense.date);
+          const gainMonth = date.getMonth();
+          const gainYear = date.getFullYear();
+
+          if (gainMonth === month && gainYear === selectedYear)
+            amountOutput += Number(expense.amount);
+        });
+
+        return {
+          monthNumber: month,
+          month: monthsList[month].substr(0, 3),
+          amountOutput: String(amountOutput),
+          amountEntry: String(amountEntry),
+        };
+      })
+      .filter((item) => {
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        return (
+          (selectedYear === currentYear && item.monthNumber <= currentMonth) ||
+          selectedYear < currentYear
+        );
+      });
+  }, [selectedYear]);
+
   return (
     <Container>
       <ContentHeader title="Dashboard" color="success">
@@ -210,6 +251,11 @@ export const Dashboard: React.FC = () => {
           subtitle={message.subtitle}
         />
         <PieChartCard data={relationExpensesGains} />
+        <HistoryBox
+          data={historyData}
+          lineColorEntry="info"
+          lineColorOutput="warning"
+        />
       </Content>
     </Container>
   );
