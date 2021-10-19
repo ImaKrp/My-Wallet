@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ResponsiveContainer } from "recharts";
+import { ResponsiveContainer, BarChart } from "recharts";
 import CountUp from "react-countup";
 
 type legendColor = {
@@ -8,7 +8,7 @@ type legendColor = {
 
 export const Container = styled.div`
   width: 48%;
-  height: 22.5rem;
+  height: 23.5rem;
   border-radius: 1rem;
   background-color: var(--card);
   transition: background-color 0.3s, transform 0.3s;
@@ -30,6 +30,10 @@ export const ChartContainer = styled(ResponsiveContainer)`
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+export const BarChartEl = styled(BarChart)`
+  color: var(--black);
 `;
 
 export const RelationContainer = styled.div`
@@ -80,4 +84,9 @@ export const Row = styled.div`
   display: flex;
   align-items: center;
   gap: 1.4rem;
+`;
+
+export const MaxHeight = styled.div`
+  height: 100%;
+  width: 30%;
 `;

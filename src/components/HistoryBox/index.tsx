@@ -32,6 +32,8 @@ export const HistoryBox: React.FC<IHistoryBox> = ({
     if (color === "success") return theme.color.success;
     if (color === "warning") return theme.color.warning;
     if (color === "info") return theme.color.info;
+    if (color === "text") return theme.color.text;
+    if (color === "card") return theme.color.card;
   }
 
   return (
@@ -52,7 +54,7 @@ export const HistoryBox: React.FC<IHistoryBox> = ({
       <ResponsiveContainer>
         <LineChartEl data={data} margin={{ right: 10, left: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={getColor("card")} />
-          <XAxis dataKey="month" stroke={getColor("card")} />
+          <XAxis dataKey="month" stroke={getColor("text")} />
           <Tooltip formatter={(value) => formatAmountValue(Number(value))} />
           <Line
             type="monotone"
@@ -62,6 +64,7 @@ export const HistoryBox: React.FC<IHistoryBox> = ({
             strokeWidth={5}
             dot={{ r: 5 }}
             activeDot={{ r: 8 }}
+            cursor="pointer" 
           />
           <Line
             type="monotone"
@@ -71,6 +74,7 @@ export const HistoryBox: React.FC<IHistoryBox> = ({
             strokeWidth={5}
             dot={{ r: 5 }}
             activeDot={{ r: 8 }}
+            cursor="pointer" 
           />
         </LineChartEl>
       </ResponsiveContainer>

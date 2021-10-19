@@ -55,7 +55,7 @@ export const Row = styled.div`
 export const LegendColor = styled.div<legendColor>`
   width: 2rem;
   height: 2rem;
-  background-color: ${({ color }) => color && `var(--card-${color})`};
+  background-color: ${({ color }) => color && `var(--${color})`};
   border-radius: 6px;
   display: flex;
   align-items: center;

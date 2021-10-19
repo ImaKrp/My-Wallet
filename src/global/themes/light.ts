@@ -3,7 +3,7 @@ const light = {
 
   color: {
     success: "#6200EE",
-    info: "#03DAC6",
+    info: "#018276",
     warning: "#B00020",
 
     card_success: "#6200EE",

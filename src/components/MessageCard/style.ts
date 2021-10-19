@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 48%;
-  height: 24rem;
+  height: 22.5rem;
   border-radius: 1rem;
   background-color: var(--card);
   transition: background-color 0.3s, transform 0.3s;

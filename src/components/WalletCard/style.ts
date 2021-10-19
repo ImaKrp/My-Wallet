@@ -7,7 +7,7 @@ type cardColor = {
 
 export const Container = styled.div<cardColor>`
   width: 31%;
-  height: 20rem;
+  height: 18rem;
   border-radius: 1rem;
   background-color: ${({ color }) => color && `var(--card-${color})`};
   transition: background-color 0.3s, transform 0.3s;

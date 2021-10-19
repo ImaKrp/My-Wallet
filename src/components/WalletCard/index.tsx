@@ -25,7 +25,7 @@ export const WalletCard: React.FC<ISelectProps> = ({
           end={amount}
           separator=","
           duration={1}
-          prefix="$ "
+          prefix="$"
           decimals={2}
         />
       </div>

@@ -7,6 +7,7 @@ import { MessageCard } from "../../../components/MessageCard";
 import { PieChartCard } from "../../../components/PieChartCard";
 import { HistoryBox } from "../../../components/HistoryBox";
 import monthsList from "../../../utils/months";
+import { MonthVariation } from "../../../components/MonthVariation";
 
 import gains from "../../../data/gains";
 import expenses from "../../../data/expenses";
@@ -199,6 +200,84 @@ export const Dashboard: React.FC = () => {
       });
   }, [selectedYear]);
 
+  const relationExpensesRecurrentEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    expenses
+      .filter((expense) => {
+        const date = new Date(expense.date);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        return month === selectedMonth && year === selectedYear;
+      })
+      .forEach((expense) => {
+        if (expense.frequency === "eventual")
+          return (amountEventual += Number(expense.amount));
+        if (expense.frequency === "recurrent")
+          return (amountRecurrent += Number(expense.amount));
+      });
+
+    const total = amountEventual + amountRecurrent;
+    const percent = (value: number): number => {
+      if (!total) return 0;
+      else return Number(((value / total) * 100).toFixed(1));
+    };
+    return [
+      {
+        name: "Recurrent",
+        amount: amountRecurrent,
+        percent: percent(amountRecurrent),
+        color: "info",
+      },
+      {
+        name: "Eventual",
+        amount: amountEventual,
+        percent: percent(amountEventual),
+        color: "warning",
+      },
+    ];
+  }, [selectedMonth, selectedYear]);
+
+  const relationGainsRecurrentEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    gains
+      .filter((gain) => {
+        const date = new Date(gain.date);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        return month === selectedMonth && year === selectedYear;
+      })
+      .forEach((gain) => {
+        if (gain.frequency === "eventual")
+          return (amountEventual += Number(gain.amount));
+        if (gain.frequency === "recurrent")
+          return (amountRecurrent += Number(gain.amount));
+      });
+
+    const total = amountEventual + amountRecurrent;
+    const percent = (value: number): number => {
+      if (!total) return 0;
+      else return Number(((value / total) * 100).toFixed(1));
+    };
+    return [
+      {
+        name: "Recurrent",
+        amount: amountRecurrent,
+        percent: percent(amountRecurrent),
+        color: "info",
+      },
+      {
+        name: "Eventual",
+        amount: amountEventual,
+        percent: percent(amountEventual),
+        color: "warning",
+      },
+    ];
+  }, [selectedMonth, selectedYear]);
+
   return (
     <Container>
       <ContentHeader title="Dashboard" color="success">
@@ -256,6 +335,11 @@ export const Dashboard: React.FC = () => {
           lineColorEntry="info"
           lineColorOutput="warning"
         />
+        <MonthVariation
+          title="Expenses"
+          data={relationExpensesRecurrentEventual}
+        />
+        <MonthVariation title="Gains" data={relationGainsRecurrentEventual} />
       </Content>
     </Container>
   );
