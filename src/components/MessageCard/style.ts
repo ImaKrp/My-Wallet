@@ -1,4 +1,18 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const animate = keyframes`
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  50% {
+    opacity: .3;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  `;
 
 export const Container = styled.div`
   width: 48%;
@@ -13,7 +27,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-
+  animation: ${animate} .5s;
   > div {
     display: flex;
     flex-direction: column;
@@ -22,6 +36,10 @@ export const Container = styled.div`
 
   &:hover {
     transform: scale(1.02);
+  }
+
+  @media (max-width: 870px) {
+    width: 100%;
   }
 `;
 

@@ -1,9 +1,23 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import CountUp from "react-countup";
 
 type cardColor = {
   color: string;
 };
+
+const animate = keyframes`
+    0%{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    50%{     
+        opacity: .3;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`;
 
 export const Container = styled.div<cardColor>`
   width: 31%;
@@ -18,7 +32,7 @@ export const Container = styled.div<cardColor>`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-
+  animation: ${animate} .5s;
   > div {
     display: flex;
     flex-direction: column;
@@ -27,6 +41,31 @@ export const Container = styled.div<cardColor>`
 
   &:hover {
     transform: scale(1.02);
+  }
+
+  .prefixValue {
+    width: fit-content;
+    color: var(--white);
+    font-size: 2.8rem;
+    font-weight: 500;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  @media (min-width: 421px) and (max-width: 870px) {
+    span {
+      word-wrap: break-word;
+    }
+    .row {
+      flex-direction: column;
+      font-size: 2.2rem;
+    }
+  }
+
+  @media (max-width: 870px) {
+    width: 100%;
   }
 `;
 

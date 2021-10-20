@@ -1,8 +1,22 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 type Colors = {
   tagColor?: string;
 };
+
+const animate = keyframes`
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    50%{
+        opacity: .3;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`;
 
 export const Container = styled.li<Colors>`
   list-style: none;
@@ -15,7 +29,7 @@ export const Container = styled.li<Colors>`
   transition: background-color 0.3s, border 0.3s, transform 0.2s, opacity 0.3s;
   border-radius: 6px;
   padding: 1.2rem 2rem;
-
+  animation: ${animate} .5s;
   &:hover {
     transform: translateX(0.5rem);
     opacity: 0.8;

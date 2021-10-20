@@ -1,25 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Header,
   Logo,
   MenuContainer,
   MenuItem,
+  SignOutBtn,
   Title,
+  AsideBtn,
+  ToggleDiv,
 } from "./style";
+import { Toggle } from "../Toogle";
 import {
   MdSpaceDashboard,
   MdArrowDownward,
   MdArrowUpward,
   MdExitToApp,
+  MdOutlineMenu,
+  MdClose,
 } from "react-icons/md";
 
+import { useAuth } from "../../hooks/useAuth";
+import { useTheme } from "../../hooks/useTheme";
+
 export const Aside: React.FC = () => {
+  const { toggleTheme, theme } = useTheme();
+  const [darkTheme, setDarkTheme] = useState(() =>
+    theme.title === "dark" ? false : true
+  );
+
+  const handleChangeTheme = () => {
+    setDarkTheme(!darkTheme);
+    toggleTheme();
+  };
+  const { signOut } = useAuth();
+  const [active, setActive] = useState(true);
   return (
-    <Container>
+    <Container isActive={active}>
       <Header>
-        <Logo/>
-        <Title>My Wallet</Title>
+        <AsideBtn onClick={() => setActive(!active)}>
+          {active ? <MdClose /> : <MdOutlineMenu />}
+        </AsideBtn>
+        <Logo />
+        <Title isActive={active}>My Wallet</Title>
       </Header>
       <MenuContainer>
         <MenuItem to="/dashboard">
@@ -34,11 +57,14 @@ export const Aside: React.FC = () => {
           <MdArrowDownward />
           Expenses
         </MenuItem>
-        <MenuItem to="/dashboard">
+        <SignOutBtn onClick={signOut}>
           <MdExitToApp />
           Sign out
-        </MenuItem>
+        </SignOutBtn>
       </MenuContainer>
+      <ToggleDiv isActive={active}>
+        <Toggle checked={darkTheme} onChange={handleChangeTheme} />
+      </ToggleDiv>
     </Container>
   );
 };

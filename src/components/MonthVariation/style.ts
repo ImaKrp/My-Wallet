@@ -1,10 +1,25 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { ResponsiveContainer, BarChart } from "recharts";
 import CountUp from "react-countup";
 
 type legendColor = {
   color: string;
 };
+
+const animate = keyframes`
+    0% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    50%{
+        opacity: .3;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`;
+
 
 export const Container = styled.div`
   width: 48%;
@@ -18,9 +33,26 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  animation: ${animate} .5s;
 
   &:hover {
     transform: scale(1.02);
+  }
+
+  @media (max-width: 870px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 40rem;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
+  @media (min-width: 670px) and (max-width: 800px) {
+    flex-direction: row;
+    height: 23.5rem;
   }
 `;
 
@@ -89,4 +121,13 @@ export const Row = styled.div`
 export const MaxHeight = styled.div`
   height: 100%;
   width: 30%;
+
+  @media (max-width: 870px) {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 670px) and (max-width: 800px) {
+    width: 30%;
+  }
 `;

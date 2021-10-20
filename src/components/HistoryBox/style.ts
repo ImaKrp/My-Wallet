@@ -1,10 +1,24 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 import { LineChart } from "recharts";
 
 type legendColor = {
   color: string;
 };
+
+const animate = keyframes`
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    50%{
+        opacity: .3;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`;
 
 export const LineChartEl = styled(LineChart)`
   color: var(--black);
@@ -23,7 +37,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-
+  animation: ${animate} .5s;
   &:hover {
     transform: scale(1.01);
   }

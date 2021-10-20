@@ -62,29 +62,31 @@ export const MonthVariation: React.FC<IPieChartCardProps> = ({
             })}
         </div>
       </RelationContainer>
-      <MaxHeight>
-        <ChartContainer>
-          <BarChartEl data={data}>
-            <Bar dataKey="amount" name="Value">
-              {data &&
-                data.map((data, index) => {
-                  return (
-                    <Cell
-                      key={index}
-                      fill={getColor(data.color)}
-                      cursor="pointer"
-                    />
-                  );
-                })}
-            </Bar>
-            <XAxis dataKey="name" stroke={getColor("text")} />
-            <Tooltip
-              cursor={{ fill: "none" }}
-              formatter={(value) => formatAmountValue(Number(value))}
-            />
-          </BarChartEl>
-        </ChartContainer>
-      </MaxHeight>
+      {(data[0].percent > 0 || data[1].percent > 0) && (
+        <MaxHeight>
+          <ChartContainer>
+            <BarChartEl data={data}>
+              <Bar dataKey="amount" name="Value">
+                {data &&
+                  data.map((data, index) => {
+                    return (
+                      <Cell
+                        key={index}
+                        fill={getColor(data.color)}
+                        cursor="pointer"
+                      />
+                    );
+                  })}
+              </Bar>
+              <XAxis dataKey="name" stroke={getColor("text")} />
+              <Tooltip
+                cursor={{ fill: "none" }}
+                formatter={(value) => formatAmountValue(Number(value))}
+              />
+            </BarChartEl>
+          </ChartContainer>
+        </MaxHeight>
+      )}
     </Container>
   );
 };

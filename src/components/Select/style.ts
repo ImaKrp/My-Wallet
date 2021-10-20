@@ -8,7 +8,7 @@ export const SelectElement = styled.select`
   border: 1px solid var(--terciary);
   background-color: var(--secondary);
   color: var(--text);
-  width: 16rem;
+  width: 12rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-image: url(${props => props.theme.image.select});

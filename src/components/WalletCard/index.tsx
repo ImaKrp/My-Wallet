@@ -20,14 +20,16 @@ export const WalletCard: React.FC<ISelectProps> = ({
     <Container color={color}>
       <div>
         <Title>{title}</Title>
-        <Amount
-          start={0}
-          end={amount}
-          separator=","
-          duration={1}
-          prefix="$"
-          decimals={2}
-        />
+        <div className="row">
+          <span className="prefixValue">$</span>
+          <Amount
+            start={0}
+            end={amount}
+            separator=","
+            duration={1}
+            decimals={2}
+          />
+        </div>
       </div>
       <Subtitle>{subtitle}</Subtitle>
       <Icon src={`/icons/${icon}.svg`} alt={title} />

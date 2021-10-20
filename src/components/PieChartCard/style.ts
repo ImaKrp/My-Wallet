@@ -1,10 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ResponsiveContainer } from "recharts";
 import CountUp from "react-countup";
 
 type legendColor = {
   color: string;
 };
+
+const animate = keyframes`
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  50% {
+    opacity: .3;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  `;
 
 export const Container = styled.div`
   width: 48%;
@@ -18,9 +32,13 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  animation: ${animate} 0.5s;
   &:hover {
     transform: scale(1.02);
+  }
+
+  @media (max-width: 870px) {
+    width: 100%;
   }
 `;
 
