@@ -7,6 +7,6 @@ import { useAuth } from "../hooks/useAuth";
 export const Routes: React.FC = () => {
   const { logged } = useAuth();
   return (
-    <BrowserRouter>{logged ? <AppRoutes /> : <PublicRoutes />}</BrowserRouter>
+    <BrowserRouter>{logged ? <AppRoutes /> : <AppRoutes />}</BrowserRouter>
   );
 };
